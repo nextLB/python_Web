@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>用户列表</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>姓名</th>
+                <th>密码</th>
+                <th>手机号</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>musk</td>
+                <td>xxx</td>
+                <td>xxxx</td>
+            </tr>
+        </tbody>
+
+        <tbody>
+        {% for item in data_list %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.user_name }}</td>
+                <td>{{ item.pass_word }}</td>
+                <td>{{ item.mobile }}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+
+
+
+
+    </table>
+
+
+</body>
+</html>
