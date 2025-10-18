@@ -1,0 +1,51 @@
+{% extends 'models_app/base.html' %}
+
+{% block title %}视觉模型选择系统 - 主界面{% endblock %}
+
+{% block content %}
+<!-- 页面头部 -->
+<div class="header">
+    <div class="welcome-text">
+        <h1>欢迎回来，{{ username }}！</h1>
+        <p>请选择您要使用的深度学习模型类型</p>
+    </div>
+    <a href="#" class="logout-btn">退出系统</a>
+</div>
+
+<!-- 功能卡片区域 -->
+<div class="dashboard-cards">
+    <!-- 自监督学习卡片 -->
+    <a href="{% url 'models_app:self_supervised' %}" class="card-link">
+        <div class="card card-self-supervised">
+            <div class="card-icon">🔍</div>
+            <h3>自监督模型</h3>
+            <p>选择自监督学习模型，如DINO系列、ConvNextV2等预训练模型。</p>
+        </div>
+    </a>
+
+    <!-- 监督学习卡片 -->
+    <a href="{% url 'models_app:supervised' %}" class="card-link">
+        <div class="card card-supervised">
+            <div class="card-icon">🎯</div>
+            <h3>监督模型</h3>
+            <p>选择监督学习模型，包括YOLO系列、分割模型、分类模型等。</p>
+        </div>
+    </a>
+
+    <!-- 无监督学习卡片（示例） -->
+    <div class="card card-unsupervised coming-soon">
+        <div class="card-icon">🔮</div>
+        <h3>无监督模型</h3>
+        <p>聚类、降维等无监督学习算法。</p>
+        <small>（开发中）</small>
+    </div>
+
+    <!-- 强化学习卡片（示例） -->
+    <div class="card card-reinforcement coming-soon">
+        <div class="card-icon">🎮</div>
+        <h3>强化学习模型</h3>
+        <p>深度Q网络、策略梯度等强化学习算法。</p>
+        <small>（开发中）</small>
+    </div>
+</div>
+{% endblock %}
