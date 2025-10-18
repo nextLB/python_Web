@@ -2,6 +2,9 @@
 
 from django.db import models
 
+
+
+# 关于user_info数据库的设置
 class user_info(models.Model):
     # 定义字段（根据需求添加）
     name = models.CharField(max_length=100, verbose_name="姓名")  # 字符串类型，最长100字符

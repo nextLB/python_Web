@@ -4,7 +4,7 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.index_list, name='data_list'),  # 函数视图
+    path('', views.index_list, name='dataList'),  # 函数视图
 ]
 
 
