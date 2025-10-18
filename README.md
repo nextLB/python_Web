@@ -21,7 +21,7 @@
     创建一个django的项目
 
         django-admin startproject main_files ./next_Web_V1.1/
-        这个就是将在./next_Web_V1.1/目录内创建一个名为main_files的项目
+            这个就是将在./next_Web_V1.1/目录内创建一个名为main_files的项目
     
     运行项目
     
@@ -30,7 +30,30 @@
     创建一个应用模块
     
         python ./manage.py startapp polls
-        这个polls的应用模块已经创建了，后面运行项目后就可以用了
+            这个polls的应用模块已经创建了，后面运行项目后就可以用了
+
+    创建数据表
+
+        python manage.py migrate
+
+    为模型的改变生成迁移文件
+
+        python manage.py makemigrations polls
+            为polls  app中的模型改变生成迁移文件
+    
+    应用数据库迁移
+        
+        再执行一遍 python manage.py migrate
+    
+    创建一个能登录管理页面的用户
+
+        python manage.py createsuperuser
+    
+    查看项目下的django内置数据表
+    
+        sqlite3 db.sqlite3
+        .tables
+        执行上述两行命令后就可以在终端看到你本项目的数据表了
 
 
 

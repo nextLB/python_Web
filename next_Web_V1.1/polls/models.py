@@ -1,28 +1,18 @@
 
 
-import datetime
 from django.db import models
-from django.utils import timezone
 
-# Create your models here.
-class Question(models.Model):
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField("date published")
+class user_info(models.Model):
+    # 定义字段（根据需求添加）
+    name = models.CharField(max_length=100, verbose_name="姓名")  # 字符串类型，最长100字符
+    age = models.IntegerField(verbose_name="年龄")  # 整数类型
 
+    # 定义Meta类，指定自定义表名
+    class Meta:
+        db_table = "user_info"  # 自定义数据表名称
+        verbose_name = "user_info"  # 后台显示的名称（可选）
+        verbose_name_plural = verbose_name  # 复数形式（可选）
+
+    # 可选：定义对象的字符串表示（方便调试）
     def __str__(self):
-        return self.question_text
-
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
-
-
-class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.choice_text
-
-
-
+        return self.name

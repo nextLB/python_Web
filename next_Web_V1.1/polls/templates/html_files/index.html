@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+</head>
+<body>
+
+    <h1>数据表内容</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>姓名</th>
+            <th>年龄</th>
+        </tr>
+        <!-- 遍历视图传递的data_list -->
+        {% for item in data_list %}
+        <tr>
+            <td>{{ item.id }}</td>  <!-- 模型自动生成的id字段 -->
+            <td>{{ item.name }}</td>  <!-- 自定义的name字段 -->
+            <td>{{ item.age }}</td>   <!-- 自定义的age字段 -->
+        </tr>
+        {% empty %}  <!-- 如果数据为空时显示 -->
+        <tr>
+            <td colspan="3">暂无数据</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
