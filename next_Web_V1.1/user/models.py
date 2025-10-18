@@ -1,6 +1,7 @@
 
 
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -11,6 +12,10 @@ class show_user_informations(models.Model):
     name = models.CharField(max_length=100, verbose_name="姓名")  # 字符串类型，最长100字符
     age = models.IntegerField(verbose_name="年龄")  # 整数类型
     sex = models.CharField(max_length=4, verbose_name="性别")
+
+    # 添加创建者字段，用于关联用户
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+
 
     # 定义Meta类，制定表名
     class Meta:

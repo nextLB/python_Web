@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- 文档基础设置 -->
+    <meta charset="UTF-8">  <!-- 设置字符编码为UTF-8，支持中文 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- 响应式设计，适配移动设备 -->
+
+    <!-- 动态页面标题：根据表单类型显示不同的标题 -->
+    <title>{% if form_type == 'add' %}添加用户{% else %}编辑用户{% endif %}</title>
+
+    <!-- 页面样式 -->
+    <style>
+        /* 全局页面样式 */
+        body {
+            font-family: Arial, sans-serif;  /* 设置字体 */
+            margin: 20px;  /* 页面外边距 */
+            background-color: #f5f5f5;  /* 页面背景色 */
+        }
+
+        /* 内容容器样式 */
+        .container {
+            max-width: 500px;  /* 最大宽度限制 */
+            margin: 0 auto;  /* 水平居中 */
+            background: white;  /* 白色背景 */
+            padding: 30px;  /* 内边距 */
+            border-radius: 8px;  /* 圆角边框 */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);  /* 阴影效果 */
+        }
+
+        /* 主标题样式 */
+        h1 {
+            color: #333;  /* 深灰色文字 */
+            text-align: center;  /* 文本居中 */
+            margin-bottom: 30px;  /* 底部外边距 */
+        }
+
+        /* 表单组样式 */
+        .form-group {
+            margin-bottom: 20px;  /* 底部外边距 */
+        }
+
+        /* 标签样式 */
+        label {
+            display: block;  /* 块级元素 */
+            margin-bottom: 5px;  /* 底部外边距 */
+            font-weight: bold;  /* 粗体 */
+            color: #333;  /* 深灰色文字 */
+        }
+
+        /* 输入框样式 */
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;  /* 宽度100% */
+            padding: 10px;  /* 内边距 */
+            border: 1px solid #ddd;  /* 灰色边框 */
+            border-radius: 4px;  /* 圆角 */
+            box-sizing: border-box;  /* 盒模型计算方式 */
+            font-size: 16px;  /* 字体大小 */
+        }
+
+        /* 按钮组样式 */
+        .btn-group {
+            display: flex;  /* 弹性布局 */
+            gap: 10px;  /* 按钮间距 */
+            margin-top: 30px;  /* 顶部外边距 */
+        }
+
+        /* 提交按钮样式 */
+        .submit-btn {
+            background-color: #4CAF50;  /* 绿色背景 */
+            color: white;  /* 白色文字 */
+            padding: 12px 24px;  /* 内边距 */
+            border: none;  /* 无边框 */
+            border-radius: 4px;  /* 圆角 */
+            cursor: pointer;  /* 鼠标悬停手型 */
+            text-decoration: none;  /* 无文本装饰 */
+            flex: 1;  /* 弹性填充 */
+            font-size: 16px;  /* 字体大小 */
+        }
+
+        /* 提交按钮悬停效果 */
+        .submit-btn:hover {
+            background-color: #45a049;  /* 悬停时更深的绿色 */
+        }
+
+        /* 取消按钮样式 */
+        .cancel-btn {
+            background-color: #6c757d;  /* 灰色背景 */
+            color: white;  /* 白色文字 */
+            padding: 12px 24px;  /* 内边距 */
+            border: none;  /* 无边框 */
+            border-radius: 4px;  /* 圆角 */
+            cursor: pointer;  /* 鼠标悬停手型 */
+            text-decoration: none;  /* 无文本装饰 */
+            text-align: center;  /* 文本居中 */
+            flex: 1;  /* 弹性填充 */
+            font-size: 16px;  /* 字体大小 */
+        }
+
+        /* 取消按钮悬停效果 */
+        .cancel-btn:hover {
+            background-color: #5a6268;  /* 悬停时更深的灰色 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 主要内容容器 -->
+    <div class="container">
+        <!-- 动态页面标题：根据表单类型显示不同的标题 -->
+        <h1>{% if form_type == 'add' %}添加新用户{% else %}编辑用户信息{% endif %}</h1>
+
+        <!-- 用户表单 -->
+        <form method="POST">  <!-- POST方法提交表单 -->
+            {% csrf_token %}  <!-- Django CSRF令牌，防止跨站请求伪造 -->
+
+            <!-- 姓名输入组 -->
+            <div class="form-group">
+                <label for="name">姓名:</label>  <!-- 姓名标签 -->
+                  <!-- 文本输入框 -->
+                  <!-- 编辑模式下预填充现有值 -->
+                <input type="text" id="name" name="name"
+                       value="{% if form_type == 'edit' %}{{ user.name }}{% endif %}"
+                       required maxlength="100">  <!-- 必填字段，最大长度100字符 -->
+            </div>
+
+            <!-- 年龄输入组 -->
+            <div class="form-group">
+                <label for="age">年龄:</label>  <!-- 年龄标签 -->
+                  <!-- 数字输入框 -->
+                  <!-- 编辑模式下预填充现有值 -->
+                <input type="number" id="age" name="age"
+                       value="{% if form_type == 'edit' %}{{ user.age }}{% endif %}"
+                       required min="0" max="150">  <!-- 必填字段，最小0岁，最大150岁 -->
+            </div>
+
+            <!-- 性别输入组 -->
+            <div class="form-group">
+                <label for="sex">性别:</label>  <!-- 性别标签 -->
+                  <!-- 文本输入框 -->
+                  <!-- 编辑模式下预填充现有值 -->
+                <input type="text" id="sex" name="sex"
+                       value="{% if form_type == 'edit' %}{{ user.sex }}{% endif %}"
+                       required maxlength="4" placeholder="例如: 男/女">  <!-- 必填字段，最大长度4字符，占位符提示 -->
+            </div>
+
+            <!-- 按钮组 -->
+            <div class="btn-group">
+                <!-- 动态提交按钮文本：根据表单类型显示不同的文本 -->
+                <button type="submit" class="submit-btn">
+                    {% if form_type == 'add' %}添加用户{% else %}更新信息{% endif %}
+                </button>
+                <!-- 取消按钮，返回用户列表 -->
+                <a href="{% url 'dataList' %}" class="cancel-btn">取消</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
