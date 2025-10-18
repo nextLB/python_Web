@@ -182,6 +182,7 @@
         <!-- 功能卡片区域 -->
         <div class="dashboard-cards">
             <!-- 用户信息管理卡片 -->
+            <!-- 这里的dataList是在urls.py中的name="dataList", 这样才可以进行反重定向页面-->
             <a href="{% url 'dataList' %}" class="card-link">
                 <div class="card card-user-management">
                     <div class="card-icon">👥</div>
