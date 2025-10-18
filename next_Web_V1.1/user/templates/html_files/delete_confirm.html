@@ -124,6 +124,13 @@
                 <!-- 取消按钮，返回用户列表 -->
                 <a href="{% url 'dataList' %}" class="cancel-btn">取消</a>
             </div>
+
+            <div class="btn-group">
+                <button type="submit" class="delete-btn">确认删除</button>
+                <a href="{% url 'dataList' %}" class="cancel-btn">返回列表</a>
+                <a href="{% url 'dashboard' %}" class="cancel-btn">返回仪表板</a>
+            </div>
+
         </form>
     </div>
 </body>

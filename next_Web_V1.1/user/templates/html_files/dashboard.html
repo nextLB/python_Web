@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统仪表板</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .welcome-text h1 {
+            color: #333;
+            margin: 0;
+            font-size: 28px;
+        }
+        .welcome-text p {
+            color: #666;
+            margin: 5px 0 0 0;
+        }
+        .logout-btn {
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        .logout-btn:hover {
+            background-color: #5a6268;
+        }
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+        .card h3 {
+            color: #333;
+            margin: 0 0 15px 0;
+            font-size: 22px;
+        }
+        .card p {
+            color: #666;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .messages {
+            margin-bottom: 20px;
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* 不同功能卡片的不同颜色主题 */
+        .card-user-management {
+            border-top: 4px solid #4CAF50;
+        }
+        .card-user-management .card-icon {
+            color: #4CAF50;
+        }
+
+        .card-settings {
+            border-top: 4px solid #2196F3;
+        }
+        .card-settings .card-icon {
+            color: #2196F3;
+        }
+
+        .card-reports {
+            border-top: 4px solid #FF9800;
+        }
+        .card-reports .card-icon {
+            color: #FF9800;
+        }
+
+        .card-analytics {
+            border-top: 4px solid #9C27B0;
+        }
+        .card-analytics .card-icon {
+            color: #9C27B0;
+        }
+
+        .coming-soon {
+            background-color: #f8f9fa;
+            color: #6c757d;
+        }
+        .coming-soon .card-icon {
+            color: #6c757d;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 页面头部 -->
+        <div class="header">
+            <div class="welcome-text">
+                <h1>欢迎回来，{{ username }}！</h1>
+                <p>请选择您要使用的功能模块</p>
+            </div>
+            <a href="{% url 'logout' %}" class="logout-btn">退出登录</a>
+        </div>
+
+        <!-- 显示消息 -->
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- 功能卡片区域 -->
+        <div class="dashboard-cards">
+            <!-- 用户信息管理卡片 -->
+            <a href="{% url 'dataList' %}" class="card-link">
+                <div class="card card-user-management">
+                    <div class="card-icon">👥</div>
+                    <h3>用户信息管理</h3>
+                    <p>查看、添加、编辑和删除用户信息。管理系统的核心用户数据。</p>
+                </div>
+            </a>
+
+            <!-- 系统设置卡片（示例） -->
+            <div class="card card-settings coming-soon">
+                <div class="card-icon">⚙️</div>
+                <h3>系统设置</h3>
+                <p>配置系统参数和个性化设置。</p>
+                <small>（开发中）</small>
+            </div>
+
+            <!-- 报表统计卡片（示例） -->
+            <div class="card card-reports coming-soon">
+                <div class="card-icon">📊</div>
+                <h3>报表统计</h3>
+                <p>查看系统数据统计和分析报表。</p>
+                <small>（开发中）</small>
+            </div>
+
+            <!-- 数据分析卡片（示例） -->
+            <div class="card card-analytics coming-soon">
+                <div class="card-icon">📈</div>
+                <h3>数据分析</h3>
+                <p>深入分析用户数据和行为模式。</p>
+                <small>（开发中）</small>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

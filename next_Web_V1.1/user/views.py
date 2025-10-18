@@ -20,7 +20,7 @@ def register_view(request):
             user = authenticate(username=username, password=password)
             login(request, user)
             messages.success(request, f'账号 {username} 注册成功！')
-            return redirect('dataList')
+            return redirect('dashboard')  # 修改：注册后跳转到仪表板
         else:
             messages.error(request, '注册失败，请检查表单错误。')
     else:
@@ -39,8 +39,8 @@ def login_view(request):
         if user is not None:
             login(request, user)
             messages.success(request, f'欢迎回来，{username}！')
-            # 获取next参数，如果存在则重定向到next指定的页面
-            next_url = request.GET.get('next', 'dataList')
+            # 获取next参数，如果存在则重定向到next指定的页面，否则重定向到仪表板
+            next_url = request.GET.get('next', 'dashboard')  # 修改：默认跳转到仪表板
             return redirect(next_url)
         else:
             messages.error(request, '用户名或密码错误！')
@@ -53,6 +53,14 @@ def logout_view(request):
     logout(request)
     messages.success(request, '您已成功退出登录！')
     return redirect('login')
+
+
+# 仪表板页面 - 登录后的主页面
+@login_required(login_url='/accounts/login/')
+def dashboard_view(request):
+    return render(request, 'html_files/dashboard.html', {
+        'username': request.user.username
+    })
 
 
 # 显示所有用户信息 - 原有的功能，添加登录要求
@@ -131,6 +139,3 @@ def delete_user_view(request, user_id):
     # 如果是GET请求，显示确认删除页面
     user = get_object_or_404(show_user_informations, id=user_id)
     return render(request, 'html_files/delete_confirm.html', {'user': user})
-
-
-

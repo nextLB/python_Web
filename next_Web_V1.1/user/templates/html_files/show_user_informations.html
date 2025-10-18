@@ -21,18 +21,32 @@
             font-weight: bold;
             color: #333;
         }
-        .logout-btn {
-            background-color: #6c757d;
-            color: white;
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+        .logout-btn, .dashboard-btn {
             padding: 8px 16px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             text-decoration: none;
             font-size: 14px;
+            transition: background 0.3s;
+        }
+        .logout-btn {
+            background-color: #6c757d;
+            color: white;
         }
         .logout-btn:hover {
             background-color: #5a6268;
+        }
+        .dashboard-btn {
+            background-color: #667eea;
+            color: white;
+        }
+        .dashboard-btn:hover {
+            background-color: #5a6fd8;
         }
         .messages {
             margin-bottom: 20px;
@@ -148,9 +162,12 @@
         <!-- 用户信息栏 -->
         <div class="user-info-bar">
             <div class="welcome-text">
-                欢迎，{{ username }}！
+                欢迎，{{ username }}！您现在正在用户信息管理模块
             </div>
-            <a href="{% url 'logout' %}" class="logout-btn">退出登录</a>
+            <div class="button-group">
+                <a href="{% url 'dashboard' %}" class="dashboard-btn">返回仪表板</a>
+                <a href="{% url 'logout' %}" class="logout-btn">退出登录</a>
+            </div>
         </div>
 
         <!-- 显示消息 -->
