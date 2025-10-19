@@ -98,6 +98,100 @@
     </style>
 </head>
 <body>
+
+    <style>
+    /* 粒子效果 */
+    .particle {
+        position: fixed;
+        pointer-events: none;
+        border-radius: 50%;
+        z-index: 9999;
+        animation: particleFloat 1s ease-out forwards;
+    }
+
+    @keyframes particleFloat {
+        0% {
+            opacity: 1;
+            transform: translate(0, 0) scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: translate(var(--tx), var(--ty)) scale(0);
+        }
+    }
+    </style>
+
+    <script>
+    // 高级粒子效果
+    document.addEventListener('mousemove', function(e) {
+        createParticles(e.clientX, e.clientY, 3);
+    });
+
+    document.addEventListener('click', function(e) {
+        createParticles(e.clientX, e.clientY, 15);
+    });
+
+    function createParticles(x, y, count) {
+        for (let i = 0; i < count; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+
+            const size = Math.random() * 8 + 2;
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.random() * 50 + 20;
+
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = (x - size/2) + 'px';
+            particle.style.top = (y - size/2) + 'px';
+
+            // 随机颜色
+            const colors = ['#667eea', '#764ba2', '#4CAF50', '#2196F3', '#FF9800', '#9C27B0'];
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+            // 随机运动方向
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance;
+            particle.style.setProperty('--tx', tx + 'px');
+            particle.style.setProperty('--ty', ty + 'px');
+
+            // 随机动画时长
+            const duration = Math.random() * 0.5 + 0.5;
+            particle.style.animationDuration = duration + 's';
+
+            document.body.appendChild(particle);
+
+            // 自动移除
+            setTimeout(() => {
+                particle.remove();
+            }, duration * 1000);
+        }
+    }
+
+    // 按钮悬停效果
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.btn, .logout-btn, .back-btn, .select-btn');
+
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 8px 20px rgba(0,0,0,0.2)';
+            });
+
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+            });
+
+            button.addEventListener('click', function(e) {
+                // 创建按钮点击特效
+                createParticles(e.clientX, e.clientY, 8);
+            });
+        });
+    });
+    </script>
+
+
     <div class="container">
         <h1>用户登录</h1>
 
