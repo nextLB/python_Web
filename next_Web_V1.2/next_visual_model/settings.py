@@ -124,3 +124,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 添加个人的配置
+#########################################
+# 配置登陆操作
+LOGIN_REDIRECT_URL = '/visual_model_system'    # 登陆成功后重定向到用户列表页面
+LOGOUT_REDIRECT_URL = '/accounts/login'     # 登出后重定向登录页面
+#########################################
+
+
