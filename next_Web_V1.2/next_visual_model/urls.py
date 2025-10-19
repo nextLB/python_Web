@@ -18,7 +18,9 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    # 注册与登录时的路径设置
     path("", include("visual_model_system.urls")),
+    # 登录后的路径设置
     path("visual_model_system/", include("visual_model_system.urls")),
     path('admin/', admin.site.urls),
 ]

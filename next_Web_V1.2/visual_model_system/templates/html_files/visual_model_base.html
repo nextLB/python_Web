@@ -1,10 +1,9 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>系统仪表板</title>
+    <title>{% block title %}视觉模型选择系统{% endblock %}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -37,7 +36,7 @@
             color: #666;
             margin: 5px 0 0 0;
         }
-        .logout-btn {
+        .back-btn, .logout-btn {
             background-color: #6c757d;
             color: white;
             padding: 10px 20px;
@@ -47,8 +46,9 @@
             text-decoration: none;
             font-size: 16px;
             transition: background 0.3s;
+            margin-left: 10px;
         }
-        .logout-btn:hover {
+        .back-btn:hover, .logout-btn:hover {
             background-color: #5a6268;
         }
         .dashboard-cards {
@@ -75,11 +75,6 @@
             margin-bottom: 20px;
             color: #667eea;
         }
-        .icon-image {
-            width: 200px;  /* 根据你的需要调整大小 */
-            height: 150px;
-<!--            object-fit: contain;-->
-        }
         .card h3 {
             color: #333;
             margin: 0 0 15px 0;
@@ -95,52 +90,88 @@
             color: inherit;
             display: block;
         }
-        .messages {
-            margin-bottom: 20px;
-        }
-        .alert {
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .alert-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
 
         /* 不同功能卡片的不同颜色主题 */
-        .card-user-management {
+        .card-self-supervised {
             border-top: 4px solid #4CAF50;
         }
-        .card-user-management .card-icon {
+        .card-self-supervised .card-icon {
             color: #4CAF50;
         }
 
-        .card-settings {
+        .card-supervised {
             border-top: 4px solid #2196F3;
         }
-        .card-settings .card-icon {
+        .card-supervised .card-icon {
             color: #2196F3;
         }
 
-        .card-reports {
+        .card-unsupervised {
             border-top: 4px solid #FF9800;
         }
-        .card-reports .card-icon {
+        .card-unsupervised .card-icon {
             color: #FF9800;
         }
 
-        .card-analytics {
+        .card-reinforcement {
             border-top: 4px solid #9C27B0;
         }
-        .card-analytics .card-icon {
+        .card-reinforcement .card-icon {
             color: #9C27B0;
+        }
+
+        /* 模型类别样式 */
+        .category-section {
+            margin-bottom: 40px;
+        }
+        .category-title {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+        }
+        .model-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .model-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+        .model-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .model-card h4 {
+            margin: 0 0 10px 0;
+            color: #333;
+            font-size: 18px;
+        }
+        .model-card p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .model-card .select-btn {
+            background-color: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 12px;
+            width: 100%;
+            transition: background 0.3s;
+        }
+        .model-card .select-btn:hover {
+            background-color: #5a6fd8;
         }
 
         .coming-soon {
@@ -152,7 +183,7 @@
         }
 
         @media (max-width: 768px) {
-            .dashboard-cards {
+            .dashboard-cards, .model-grid {
                 grid-template-columns: 1fr;
             }
             .header {
@@ -163,66 +194,11 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <!-- 页面头部 -->
-        <div class="header">
-            <div class="welcome-text">
-                <h1>欢迎回来，{{ username }}！</h1>
-                <p>请选择您要使用的功能模块</p>
-            </div>
-            <a href="{% url 'logout' %}" class="logout-btn">退出登录</a>
-        </div>
-
-        <!-- 显示消息 -->
-        {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        <!-- 功能卡片区域 -->
-        <div class="dashboard-cards">
-            <a href="{% url 'visual_model_main_view' %}" class="card-link">
-                <div class="card card-settings coming-soon">
-                    <div class="card-icon">
-                        <img src="{% static 'images/visual_model_icon.png' %}" alt="视觉模型" class="icon-image">
-                    </div>
-                    <h3>视觉模型选择</h3>
-                    <p>YOLO、DeepLab等等</p>
-                </div>
-            </a>
-
-
-            <div class="card card-settings coming-soon">
-                <div class="card-icon">⚙️</div>
-                <h3>页面2</h3>
-                <p>two</p>
-                <small>（开发中）</small>
-            </div>
-
-
-            <div class="card card-reports coming-soon">
-                <div class="card-icon">📊</div>
-                <h3>页面3</h3>
-                <p>three</p>
-                <small>（开发中）</small>
-            </div>
-
-
-            <div class="card card-analytics coming-soon">
-                <div class="card-icon">📈</div>
-                <h3>页面4</h3>
-                <p>four</p>
-                <small>（开发中）</small>
-            </div>
-
-
-        </div>
+        {% block content %}
+        {% endblock %}
     </div>
 </body>
 </html>

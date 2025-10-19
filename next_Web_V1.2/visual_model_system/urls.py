@@ -40,4 +40,7 @@ urlpatterns = [
     #     作用: 显示用户登录后的主控制面板
     path('dashboard/', views.dashboard_view, name='dashboard'),
 
+    # 视觉模型主界面的设置
+    path('visual_model_system/', views.visual_model_main_view, name='visual_model_main_view')
+
 ]

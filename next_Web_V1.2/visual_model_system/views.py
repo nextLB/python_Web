@@ -127,3 +127,12 @@ def dashboard_view(request):
     return render(request, 'html_files/dashboard.html', {
         'username': request.user.username
     })
+
+
+# 视觉模型仪表盘选择主界面
+@login_required(login_url='/accounts/login/')
+def visual_model_main_view(request):
+    return render(request, 'html_files/visual_model_main.html')
+
+
+
