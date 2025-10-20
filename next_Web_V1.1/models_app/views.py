@@ -68,7 +68,7 @@ def supervised(request):
         'model_categories': supervised_models,
         'page_title': '监督模型选择'
     }
-    return render(request, 'models_app/supervised.html', context)
+    return render(request, 'models_app/supervised_model.html', context)
 
 
 def select_model(request, model_type, model_name):

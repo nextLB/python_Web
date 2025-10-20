@@ -26,14 +26,15 @@
 
     <!-- 监督学习卡片 -->
     <div class="card card-supervised">
-        <div class="card-icon">🎯</div>
-        <h3>监督模型</h3>
-        <p>选择监督学习模型，包括YOLO系列、分割模型、分类模型等。</p>
-        <small>（开发中）</small>
+        <a href="{% url 'supervised_model' %}" class="card-link">
+            <div class="card-icon">🎯</div>
+            <h3>监督模型</h3>
+            <p>选择监督学习模型，包括YOLO系列、分割模型等。</p>
+        </a>
     </div>
 
 
-    <!-- 强化学习卡片（示例） -->
+    <!-- 强化学习卡片 -->
     <div class="card card-reinforcement coming-soon">
         <div class="card-icon">🎮</div>
         <h3>强化学习模型</h3>

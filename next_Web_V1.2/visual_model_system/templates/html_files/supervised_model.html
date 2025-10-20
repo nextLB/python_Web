@@ -1,0 +1,46 @@
+{% extends 'html_files/visual_model_base.html' %}
+
+{% block title %}视觉模型选择系统 - 监督模型{% endblock %}
+
+{% block content %}
+<!-- 页面头部 -->
+<div class="header">
+    <div class="welcome-text">
+        <h1>{{ page_title }}</h1>
+        <p>请选择适合您任务的监督学习模型</p>
+    </div>
+    <div>
+        <a href="{% url 'visual_model_system:dashboard' %}" class="back-btn">返回主界面</a>
+        <a href="#" class="logout-btn">退出系统</a>
+    </div>
+</div>
+
+<!-- 模型选择区域 -->
+{% for category, models in model_categories.items %}
+<div class="category-section">
+    <h2 class="category-title">{{ category }}</h2>
+    <div class="model-grid">
+        {% for model in models %}
+        <div class="model-card">
+            <h4>{{ model.name }}</h4>
+            <p>{{ model.description }}</p>
+            <button class="select-btn" onclick="selectModel('supervised', '{{ model.name }}')">
+                选择此模型
+            </button>
+        </div>
+        {% endfor %}
+        
+        <!-- 扩展接口 - 预留空位用于添加新模型 -->
+        <div class="model-card" style="border-left-color: #28a745; background-color: #f8fff9;">
+            <h4>+ 添加新模型</h4>
+            <p>点击此处添加新的监督模型</p>
+            <button class="select-btn" style="background-color: #28a745;" onclick="addNewModel('{{ category }}')">
+                添加模型
+            </button>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+{% endblock %}

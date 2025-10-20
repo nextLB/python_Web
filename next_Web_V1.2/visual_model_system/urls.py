@@ -2,6 +2,9 @@ from django.urls import path
 from django.views.generic import RedirectView
 from . import views
 
+
+app_name = 'visual_model_system'
+
 urlpatterns = [
     # 将根路径重定向到仪表板
     # 关于重定向的解释：重定向是指当用户访问某个URL时，服务器会返回一个特殊的响应告诉浏览器"请去访问另一个 URL"，然后浏览器会自动跳转到新的地址。
@@ -41,6 +44,8 @@ urlpatterns = [
     path('dashboard/', views.dashboard_view, name='dashboard'),
 
     # 视觉模型主界面的设置
-    path('visual_model_system/', views.visual_model_main_view, name='visual_model_main_view')
+    path('visual_model_system/', views.visual_model_main_view, name='visual_model_main_view'),
 
+    # 视觉监督模型主界面
+    path('visual_model_system/supervised/', views.supervised, name='supervised_model'),
 ]

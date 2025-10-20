@@ -135,4 +135,35 @@ def visual_model_main_view(request):
     return render(request, 'html_files/visual_model_main.html')
 
 
+# 监督模型具体选择的主界面
+@login_required(login_url='/accounts/login/')
+def supervised(request):
+    # 监督学习模型列表 - 便于扩展
+    supervised_models = {
+        '目标检测模型': [
+            {'name': 'YOLOV1', 'description': '第一个YOLO版本，实时目标检测'},
+            {'name': 'YOLOV2', 'description': '改进的YOLO版本，支持更多尺度'},
+            {'name': 'YOLOV3', 'description': '三尺度预测的YOLO版本'},
+            {'name': 'YOLOV4', 'description': '引入多种技巧的优化版本'},
+            {'name': 'YOLOV5', 'description': 'PyTorch实现的YOLO版本'},
+            {'name': 'YOLOV6', 'description': '面向工业应用的版本'},
+            {'name': 'YOLOV7', 'description': '最新版本的YOLO模型'},
+            {'name': 'YOLOV8', 'description': '支持检测、分割、分类的多任务版本'},
+        ],
+        '语义分割模型': [
+            {'name': 'DeepLabV3', 'description': '使用空洞卷积的语义分割模型'},
+            {'name': 'DeepLabV3+', 'description': 'DeepLabV3的改进版本'},
+            {'name': 'FPN', 'description': '特征金字塔网络'},
+            {'name': 'U-Net', 'description': '经典的编码器-解码器分割架构'},
+            {'name': 'Mask R-CNN', 'description': '实例分割模型'},
+            {'name': 'SegNet', 'description': '基于编码器-解码器的分割网络'},
+        ]
+    }
+
+    context = {
+        'model_categories': supervised_models,
+        'page_title': '监督模型选择'
+    }
+    return render(request, 'html_files/supervised_model.html', context)
+
 
