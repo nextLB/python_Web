@@ -25,6 +25,6 @@ class user_informations_data_table(models.Model):
         return f"用户账号_{self.user_account}  用户密码_{self.user_password}"
 
 
-# 用于关联用户账号的模型选择表
+
 
 
